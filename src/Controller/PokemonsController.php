@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
-class PokemonsController extends AppController {
-
+class PokemonsController extends AppController
+{
+    public function index()
+    {
+    }
 }

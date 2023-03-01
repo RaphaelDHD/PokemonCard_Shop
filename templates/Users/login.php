@@ -39,7 +39,7 @@
                     <?= $this->Form->end()?>
             </div>
         </div>
-        <a href="#!">Create account</a>
+        <?= $this->Html->link('Crée votre compte','/users/create_account') ?>
     </center>
 
     <div class="section"></div>
