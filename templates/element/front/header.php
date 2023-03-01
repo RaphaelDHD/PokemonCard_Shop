@@ -4,7 +4,9 @@
         <ul class="right hide-on-med-and-down">
             <li><a href="#">Boutique</a></li>
             <li><a href="#">Mes cartes</a></li>
-            <li><a class="amber darken-1 bold" href="#">Deconnexion</a></li>
+            <li>
+                <?= $this->Html->link('Deconnexion', '/users/logout',['class' => 'amber darken-1 bold']) ?>
+            </li>
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
