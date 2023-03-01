@@ -16,8 +16,8 @@
                     </div>
                     <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='text' name='pseudo' id='pseudo' />
-                <label for='text'>Pseudo</label>
+                <input class='validate' type='text' name='name' id='name' />
+                <label for='text'>Name</label>
               </div>
             </div>
             <div class='row'>

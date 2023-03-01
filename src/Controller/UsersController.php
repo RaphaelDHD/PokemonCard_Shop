@@ -1,5 +1,7 @@
-<?php 
+<?php
+
 namespace App\Controller;
+
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class UsersController extends AppController
@@ -8,47 +10,60 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['login', 'createAccount']);
-
     }
 
     public function login()
     {
         $this->viewBuilder()->setLayout('connection_layout');
+        $user = $this->Users->newEmptyEntity();
         $result = $this->Authentication->getResult();
-        // If the user is logged in send them away.
         if ($result->isValid()) {
             $target = $this->Authentication->getLoginRedirect() ?? '/Pokemons/index';
             return $this->redirect($target);
         }
-        if ($this->request->is('post')) {
+        $this->getRequest()->getSession()->delete('Flash');
+        if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error('Invalid username or password');
         }
+        $this->set(compact('user'));
     }
 
     public function createAccount()
     {
-        // creér un utilisateur a partir du forme et enregistre le dans la base de donnée  
         $this->viewBuilder()->setLayout('connection_layout');
+        // Créer un nouvel utilisateur
         $user = $this->Users->newEmptyEntity();
+
+        // Vérifier si la requête HTTP est une requête POST
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            $user->password = (new DefaultPasswordHasher)->hash($user->password);
-            $user->role = 'user';
-            $user->status = 'active';
-            $user->created = date('Y-m-d H:i:s');
-            $user->modified = date('Y-m-d H:i:s');
+            $data = $this->request->getData();
+            $user = $this->Users->patchEntity($user, $data);
+            //$user->password = (new DefaultPasswordHasher)->hash($data['password']);
+
+            // Tenter de sauvegarder l'utilisateur
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Votre compte a été créé avec succès.'));
+                $this->Authentication->setIdentity($user);
                 return $this->redirect(['action' => 'login']);
+            } else {
+                // Afficher un message d'erreur si la sauvegarde a échoué
+                $this->Flash->error(__('Impossible de créer votre compte. Veuillez réessayer.'));
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+
+        // Passer l'entité utilisateur à la vue
+        $this->set(compact('user'));
     }
 
-    public function logout(){
+    public function logout()
+    {
         $this->Authentication->logout();
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
 
-
+    protected function _setPassword(string $password)
+    {
+        $hasher = new DefaultPasswordHasher();
+        return $hasher->hash($password);
+    }
 }
