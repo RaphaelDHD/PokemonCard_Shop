@@ -11,12 +11,25 @@ nav .brand-logo {
   color: #444;
 }
 
+nav .brand-logo img {
+    width: 100px;
+    margin-top: 6%;
+}
+
+h1 {
+    font-weight: 600;
+    font-family: Arial;
+}
+
+.bold {
+    font-weight: 600;
+}
+
 p {
   line-height: 2rem;
 }
 
 .sidenav-trigger {
-  color: #26a69a;
 }
 
 .parallax-container {
@@ -54,4 +67,5 @@ p {
 
 footer.page-footer {
   margin: 0;
+    background-color: #ffb300;
 }
