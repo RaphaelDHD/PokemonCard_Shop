@@ -34,9 +34,11 @@ return static function (RouteBuilder $routes) {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pokemons', 'action' => 'index']);
+        $builder->connect('/', ['controller' => 'pokemons', 'action' => 'index']);
         $builder->connect('/login', ['controller' => 'users', 'action' => 'login']);
         $builder->connect('/create', ['controller' => 'users', 'action' => 'createAccount']);
+        $builder->connect('/shop', ['controller' => 'pokemons', 'action' => 'shop']);
+
 
         /*
          * Connect catchall routes for all controllers.

@@ -15,7 +15,6 @@ class PokemonsController extends AppController
                 return $q->where(['ListCards.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
             ->order(['Pokemons.id' => 'ASC']);
-        dd($this->request->getSession()->read('Auth.id'));
         $this->set(compact('pokemons'));
     }
 
