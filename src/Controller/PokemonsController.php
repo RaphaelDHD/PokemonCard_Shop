@@ -53,4 +53,18 @@ class PokemonsController extends AppController
             $this->redirect(['action' => 'basketP']);
         }
     }
+
+    public function addToBasket($id_card)
+    {
+        $this->loadModel('Baskets');
+        if ($id_card != null) {
+            $entity = $this->Baskets->newEmptyEntity();
+            $entity->user_id = $this->request->getSession()->read('Auth.id');
+            $entity->card_id = $id_card;
+            $this->Baskets->save($entity);
+            $this->redirect(['action' => '/shop']);
+        }
+    }
+
+
 }

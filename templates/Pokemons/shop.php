@@ -9,20 +9,25 @@
             <?php foreach ($pokemons as $pokemon) : ?>
               <?php if ($i % 5 == 0) : ?>
                 <div class="row">
-              <?php endif; ?>
-              <div class="col s6 m3">
-                <div class="card">
-                  <div class="card-image center-align">
-                    <img class="responsive-img pokemon-image" src="<?= $pokemon->image ?>">
-                  </div>
-                  <div class="card-content">
-                  <span class="card-title"><?= $pokemon->name ?></span>
-                    <p><?= $pokemon->price ?></p>
+                <?php endif; ?>
+                <div class="col s6 m3">
+                  <div class="card">
+                    <div class="card-image center-align">
+                      <img class="responsive-img pokemon-image" src="<?= $pokemon->image ?>">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title"><?= $pokemon->name ?></span>
+                      <p><?= $pokemon->price ?></p>
+                      <?= $this->Html->link(
+                        'add_shopping_cart                        ',
+                        ['action' => 'addToBasket', $pokemon->id],
+                        ['class' => 'material-icons indigo-text darken-4-text']
+                      ) ?>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <?php $i++; ?>
-              <?php if ($i % 5 == 0 || $i == 151) : ?>
+                <?php $i++; ?>
+                <?php if ($i % 5 == 0 || $i == 151) : ?>
                 </div>
               <?php endif; ?>
             <?php endforeach; ?>
@@ -34,24 +39,24 @@
 </div>
 
 <style>
-    .scroll-view .row {
-  margin-bottom: 0;
-  margin-left: 2em;
-}
-
-.scroll-view .col {
-  padding: 0 8px;
-}
-
-@media only screen and (min-width: 601px) {
-  .scroll-view .col.m3 {
-    width: 19%;
-    display: inline-block;
-    float: none;
+  .scroll-view .row {
+    margin-bottom: 0;
+    margin-left: 2em;
   }
-}
 
-.pokemon-image {
-  max-width: 50%;
-}
+  .scroll-view .col {
+    padding: 0 8px;
+  }
+
+  @media only screen and (min-width: 601px) {
+    .scroll-view .col.m3 {
+      width: 19%;
+      display: inline-block;
+      float: none;
+    }
+  }
+
+  .pokemon-image {
+    max-width: 50%;
+  }
 </style>
