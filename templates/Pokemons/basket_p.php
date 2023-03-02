@@ -1,18 +1,41 @@
 <div class="container">
   <h4>Mon Panier</h4>
-  <div class="row">
+  <ul class="collection">
     <?php foreach ($pokemons as $pokemon) : ?>
-      <div class="col s12 m6 l4">
-        <div class="card">
-          <div class="card-image">
-            <img src="<?= $pokemon->image ?>">
-            <span class="card-title"><?= h($pokemon->name) ?></span>
-          </div>
-          <div class="card-content">
-            <p>Prix : <?= h($pokemon->price) ?></p>
-          </div>
+      <li class="collection-item avatar item">
+        <img src="<?= $pokemon->image ?>" alt="" class="responsive-img" style="width: 150px;">
+        <div class="content">
+          <span class="title"><?= h($pokemon->name) ?></span>
+          <p class="price">Prix : <?= h($pokemon->price) ?></p>
         </div>
-      </div>
+        <a href="#" class="secondary-content"><i class="material-icons indigo-text darken-2-text">delete</i></a>
+      </li>
     <?php endforeach; ?>
+  </ul>
+  <div class="right-align">
+    <a class="waves-effect waves-light btn indigo darken-2"><i class="material-icons left ">shopping_cart</i>Acheter</a>
   </div>
 </div>
+
+
+
+
+<style>
+  .collection-item.avatar {
+    display: flex;
+    align-items: center;
+  }
+
+  .item {
+    padding: 10px;
+  }
+
+  .content {
+    margin-left: 20px;
+  }
+
+  .price {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
