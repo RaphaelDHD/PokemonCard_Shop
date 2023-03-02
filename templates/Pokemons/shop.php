@@ -2,6 +2,13 @@
   <div class="row">
     <div class="col s12">
       <h4>Boutique</h4>
+      <label>Trier</label>
+      <select class="browser-default" id="sort-selector">
+        <option value="1">Prix Croissant</option>
+        <option value="2">Prix Décroissant</option>
+        <option value="3">Nom</option>
+        <option value="3">Type</option>
+      </select>
       <div class="row no-gutters">
         <div class="col s12">
           <div class="scroll-view" style="max-height: 550px; overflow-y: auto;">
@@ -60,3 +67,12 @@
     max-width: 50%;
   }
 </style>
+
+<script>
+  const sortSelector = document.getElementById('sort-selector');
+
+  sortSelector.addEventListener('change', function() {
+    const selectedValue = this.options[this.selectedIndex].value;
+    window.location.href = '/Pokemons/shop/' + selectedValue;
+  });
+</script>

@@ -18,12 +18,29 @@ class PokemonsController extends AppController
         $this->set(compact('pokemons'));
     }
 
-    public function shop()
+    public function shop($method = 3)
     {
-        $pokemons = $this->Pokemons
-            ->find()
-            ->order(['id' => 'desc']);
-        $this->set(compact('pokemons'));
+        if ($method == 1) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->order(['price' => 'asc']);
+            $this->set(compact('pokemons'));
+        } elseif ($method == 2) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->order(['price' => 'desc']);
+            $this->set(compact('pokemons'));
+        } elseif ($method == 3) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->order(['name' => 'asc']);
+            $this->set(compact('pokemons'));
+        } elseif ($method == 4) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->order(['type1' => 'asc']);
+            $this->set(compact('pokemons'));
+        }
     }
 
 
@@ -65,6 +82,4 @@ class PokemonsController extends AppController
             $this->redirect(['action' => '/shop']);
         }
     }
-
-
 }
