@@ -26,7 +26,7 @@ class PokemonsController extends AppController
         $this->set(compact('pokemons'));
     }
 
-    
+
     public function basketP()
     {
         $this->loadModel('Baskets');
@@ -37,7 +37,20 @@ class PokemonsController extends AppController
                 return $q->where(['Baskets.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
             ->order(['Pokemons.id' => 'ASC']);
+
+
         $this->set(compact('pokemons'));
     }
 
+    public function removeFromBasket($id_card)
+    {
+        $this->loadModel('Baskets');
+        if ($id_card != null) {
+            $entity = $this->Baskets->find()
+                ->where(['user_id' => $this->request->getSession()->read('Auth.id'), 'card_id' => $id_card])
+                ->first();
+            $this->Baskets->delete($entity);
+            $this->redirect(['action' => 'basketP']);
+        }
+    }
 }

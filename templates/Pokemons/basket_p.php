@@ -8,12 +8,14 @@
           <span class="title"><?= h($pokemon->name) ?></span>
           <p class="price">Prix : <?= h($pokemon->price) ?></p>
         </div>
-        <a href="#" class="secondary-content"><i class="material-icons indigo-text darken-2-text">delete</i></a>
+        <?= $this->Html->link('delete',
+         ['action' => 'removeFromBasket', $pokemon->id],
+         ['class' => 'secondary-content material-icons indigo-text darken-4-text']) ?>
       </li>
     <?php endforeach; ?>
   </ul>
   <div class="right-align">
-    <a class="waves-effect waves-light btn indigo darken-2"><i class="material-icons left ">shopping_cart</i>Acheter</a>
+    <a class="waves-effect waves-light btn indigo darken-4"><i class="material-icons left">shopping_cart</i>Acheter</a>
   </div>
 </div>
 
