@@ -14,9 +14,9 @@
                 <div class="card">
                   <div class="card-image center-align">
                     <img class="responsive-img pokemon-image" src="<?= $pokemon->image ?>">
-                    <span class="card-title"><?= $pokemon->name ?></span>
                   </div>
                   <div class="card-content">
+                  <span class="card-title"><?= $pokemon->name ?></span>
                     <p><?= $pokemon->price ?></p>
                   </div>
                 </div>

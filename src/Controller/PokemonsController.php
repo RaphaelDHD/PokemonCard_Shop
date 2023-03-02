@@ -25,4 +25,19 @@ class PokemonsController extends AppController
             ->order(['id' => 'desc']);
         $this->set(compact('pokemons'));
     }
+
+    
+    public function basketP()
+    {
+        $this->loadModel('Baskets');
+
+        $pokemons = $this->Pokemons
+            ->find()
+            ->innerJoinWith('Baskets', function ($q) {
+                return $q->where(['Baskets.user_id' => $this->request->getSession()->read('Auth.id')]);
+            })
+            ->order(['Pokemons.id' => 'ASC']);
+        $this->set(compact('pokemons'));
+    }
+
 }

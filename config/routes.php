@@ -38,6 +38,7 @@ return static function (RouteBuilder $routes) {
         $builder->connect('/login', ['controller' => 'users', 'action' => 'login']);
         $builder->connect('/create', ['controller' => 'users', 'action' => 'createAccount']);
         $builder->connect('/shop', ['controller' => 'pokemons', 'action' => 'shop']);
+        $builder->connect('/basket', ['controller' => 'pokemons', 'action' => 'basketP']);
 
 
         /*

@@ -9,6 +9,9 @@
                 <?= $this->Html->link('Mes cartes', '/') ?>
             </li>
             <li>
+                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', '/basket', ['class' => 'white-text', 'escapeTitle' => false]) ?>
+            </li>
+            <li>
                 <?= $this->Html->link('Deconnexion', '/users/logout', ['class' => 'amber darken-1 bold']) ?>
             </li>
         </ul>
@@ -19,6 +22,9 @@
             </li>
             <li>
                 <?= $this->Html->link('Mes cartes', '/') ?>
+            </li>
+            <li>
+                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', '/basket', ['class' => 'white-text', 'escapeTitle' => false]) ?>
             </li>
             <li>
                 <?= $this->Html->link('Deconnexion', '/users/logout', ['class' => 'amber darken-1 bold']) ?>
