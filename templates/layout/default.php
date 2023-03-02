@@ -14,7 +14,7 @@
 
 <?= $this->element("front/header") ?>
 
-
+<?= $this->fetch('content'); ?>
 <?= $this->element("front/footer") ?>
 
 <!--  Scripts-->

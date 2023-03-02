@@ -12,9 +12,15 @@
             <div class="col l3 s12">
                 <h5 class="white-text">Liens utiles</h5>
                 <ul>
-                    <li><a class="white-text" href="#!">Ma Liste</a></li>
-                    <li><a class="white-text" href="#!">Boutique</a></li>
-                    <li><a class="white-text" href="#!">Deconnexion</a></li>
+                    <li>
+                        <?= $this->Html->link('Boutique', '/shop' , ['class' => 'white-text']) ?>
+                    </li>
+                    <li>
+                        <?= $this->Html->link('Mes cartes', '/', ['class' => 'white-text']) ?>
+                    </li>
+                    <li>
+                        <?= $this->Html->link('Deconnexion', '/users/logout', ['class' => 'white-text']) ?>
+                    </li>
                 </ul>
             </div>
         </div>

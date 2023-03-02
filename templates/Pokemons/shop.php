@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col s12">
-      <h4>Mes cartes</h4>
+      <h4>Boutique</h4>
       <div class="row no-gutters">
         <div class="col s12">
           <div class="scroll-view" style="max-height: 550px; overflow-y: auto;">
@@ -26,10 +26,6 @@
                 </div>
               <?php endif; ?>
             <?php endforeach; ?>
-            <?php if($i == 0) {
-
-              echo "<h2 >C'est un peu vide ici...</h2>";
-            } ?>
           </div>
         </div>
       </div>

@@ -18,14 +18,14 @@
                     <div class='row'>
                         <div class='input-field col s12'>
                             <input class='validate' type='email' name='email' id='email' />
-                            <label for='email'>Enter your email</label>
+                            <label for='email'>E-Mail</label>
                         </div>
                     </div>
 
                     <div class='row'>
                         <div class='input-field col s12'>
                             <input class='validate' type='password' name='password' id='password' />
-                            <label for='password'>Enter your password</label>
+                            <label for='password'>Mot de passe</label>
                         </div>
 
                     </div>
@@ -39,7 +39,7 @@
                     <?= $this->Form->end()?>
             </div>
         </div>
-        <?= $this->Html->link('Crée votre compte','/users/create_account') ?>
+        <?= $this->Html->link('Créez votre compte','/users/create_account') ?>
     </center>
 
     <div class="section"></div>
