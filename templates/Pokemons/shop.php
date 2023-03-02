@@ -3,11 +3,20 @@
     <div class="col s12">
       <h4>Boutique</h4>
       <label>Trier</label>
-      <select class="browser-default" id="sort-selector">
-        <option value="1">Prix Croissant</option>
-        <option value="2">Prix Décroissant</option>
-        <option value="3">Nom</option>
-        <option value="3">Type</option>
+      <label>Trier</label>
+      <select class="browser-default" id="sort-selector" onchange="sortShop()">
+        <option value="1" <?php if ($method == 1) {
+                            echo 'selected';
+                          } ?>>Prix Croissant</option>
+        <option value="2" <?php if ($method == 2) {
+                            echo 'selected';
+                          } ?>>Prix Décroissant</option>
+        <option value="3" <?php if ($method == 3) {
+                            echo 'selected';
+                          } ?>>Nom</option>
+        <option value="4" <?php if ($method == 4) {
+                            echo 'selected';
+                          } ?>>Type</option>
       </select>
       <div class="row no-gutters">
         <div class="col s12">

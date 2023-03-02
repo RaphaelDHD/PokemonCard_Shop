@@ -20,6 +20,7 @@ class PokemonsController extends AppController
 
     public function shop($method = 3)
     {
+        $this->set('method', $method);
         if ($method == 1) {
             $pokemons = $this->Pokemons
                 ->find()
