@@ -17,6 +17,11 @@ class PokemonsTable extends Table
         $this->hasMany('ListCards', [
             'foreignKey' => 'card_id'
         ]);
+
+        $this->hasMany('Baskets', [
+            'foreignKey' => 'card_id'
+        ]);
+
     }
 
 
