@@ -13,7 +13,12 @@
               <div class="col s6 m3">
                 <div class="card">
                   <div class="card-image center-align">
-                    <img class="responsive-img pokemon-image" src="<?= $pokemon->image ?>">
+                      <?= $this->Html->link(
+                          '<img class="responsive-img pokemon-image" src="'. $pokemon->image. '">',
+                          ['action' => 'description', $pokemon->id],
+                          ['escapeTitle' => FALSE]
+                      ); ?>
+
                   </div>
                   <div class="card-content">
                   <span class="card-title"><?= $pokemon->name ?></span>

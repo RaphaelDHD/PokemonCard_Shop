@@ -35,7 +35,7 @@
                       <span class="card-title"><?= $pokemon->name ?></span>
                       <p><?= $pokemon->price ?></p>
                       <?= $this->Html->link(
-                        'add_shopping_cart                        ',
+                        'add_shopping_cart',
                         ['action' => 'addToBasket', $pokemon->id],
                         ['class' => 'material-icons indigo-text darken-4-text']
                       ) ?>

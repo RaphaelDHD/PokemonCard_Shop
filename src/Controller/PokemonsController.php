@@ -103,4 +103,8 @@ class PokemonsController extends AppController
         $this->set(compact('pokemons'));
     }
 
+    public function description($id_card) {
+
+    }
+
 }
