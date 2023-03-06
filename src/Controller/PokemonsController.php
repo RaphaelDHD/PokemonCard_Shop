@@ -80,7 +80,27 @@ class PokemonsController extends AppController
             $entity->user_id = $this->request->getSession()->read('Auth.id');
             $entity->card_id = $id_card;
             $this->Baskets->save($entity);
-            $this->redirect(['action' => '/shop']);
+            $this->redirect(['action' => 'shop']);
         }
     }
+
+    public function buy(){
+        $this->loadModel('Baskets');
+        $this->loadModel('ListCards');
+
+        $basket = $this->Baskets
+            ->find()
+            ->where(['user_id' => $this->request->getSession()->read('Auth.id')]);
+        foreach ($basket as $card) {
+            $entity = $this->ListCards->newEmptyEntity();
+            $entity->user_id = $this->request->getSession()->read('Auth.id');
+            $entity->card_id = $card->card_id;
+            $this->ListCards->save($entity);
+            $this->Baskets->delete($card);
+        }
+        $this->redirect(['action' => 'index']);
+
+        $this->set(compact('pokemons'));
+    }
+
 }
