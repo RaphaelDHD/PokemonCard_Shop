@@ -72,6 +72,10 @@
     }
   }
 
+  .scroll-view {
+    overflow-x: hidden;
+  }
+
   .pokemon-image {
     max-width: 50%;
   }
