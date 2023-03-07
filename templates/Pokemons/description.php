@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Description de <?= $pokemon->name ?></title>
+    <?= $this->Html->css(['description']); ?>
 </head>
 <body>
 <div class="container">

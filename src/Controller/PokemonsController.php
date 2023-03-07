@@ -99,8 +99,6 @@ class PokemonsController extends AppController
             $this->Baskets->delete($card);
         }
         $this->redirect(['action' => 'index']);
-
-        $this->set(compact('pokemons'));
     }
 
     public function description($id_card) {
