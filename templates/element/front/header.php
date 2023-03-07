@@ -9,14 +9,14 @@
                 <?= $this->Html->link('Mes cartes', ['action' => 'index']) ?>
             </li>
             <li>
-                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', ['action' => 'basketP'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
+                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', ['action' => '/basketP'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
             </li>
             <li>
                 <?php
                 if ($this->request->getSession()->read('Auth.id')) {
-                    echo $this->Html->link('Deconnexion', ['action' => 'logout'], ['class' => 'amber darken-1 bold']);
+                    echo $this->Html->link('Deconnexion', '/users/logout', ['class' => 'amber darken-1 bold']);
                 } else {
-                    echo $this->Html->link('Connexion', ['action' => 'login'], ['class' => 'amber darken-1 bold']);
+                    echo $this->Html->link('Connexion', '/users/login', ['class' => 'amber darken-1 bold']);
                 }
                 ?>
             </li>
@@ -24,20 +24,20 @@
 
         <ul id="nav-mobile" class="sidenav">
             <li>
-                <?= $this->Html->link('Boutique', ['action' => 'shop']) ?>
+                <?= $this->Html->link('Boutique', ['action' => '/shop']) ?>
             </li>
             <li>
-                <?= $this->Html->link('Mes cartes', ['action' => 'index']) ?>
+                <?= $this->Html->link('Mes cartes', ['action' => '/index']) ?>
             </li>
             <li>
-                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', ['action' => 'basketP'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
+                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', ['action' => '/basketP'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
             </li>
             <li>
                 <?php
                 if ($this->request->getSession()->read('Auth.id')) {
-                    echo $this->Html->link('Deconnexion', ['action' => 'logout'], ['class' => 'amber darken-1 bold']);
+                    echo $this->Html->link('Deconnexion', '/users/logout', ['class' => 'amber darken-1 bold']);
                 } else {
-                    echo $this->Html->link('Connexion', ['action' => 'login'], ['class' => 'amber darken-1 bold']);
+                    echo $this->Html->link('Connexion', '/users/login', ['class' => 'amber darken-1 bold']);
                 }
                 ?>
             </li>
