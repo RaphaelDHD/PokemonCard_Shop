@@ -5,6 +5,13 @@ namespace App\Controller;
 
 class PokemonsController extends AppController
 {
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated(['shop', 'basketP','removeFromBasket','addToBasket']);
+    }
+
     public function index()
     {
         $this->loadModel('ListCards');
@@ -99,6 +106,8 @@ class PokemonsController extends AppController
             $this->Baskets->delete($card);
         }
         $this->redirect(['action' => 'index']);
+
+        $this->set(compact('pokemons'));
     }
 
     public function description($id_card) {

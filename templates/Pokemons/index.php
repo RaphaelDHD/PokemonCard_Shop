@@ -4,13 +4,12 @@
       <h4>Mes cartes</h4>
       <div class="row no-gutters">
         <div class="col s12">
-          <div class="scroll-view" style="max-height: 550px; overflow-y: auto;">
             <?php $i = 0; ?>
             <?php foreach ($pokemons as $pokemon) : ?>
               <?php if ($i % 5 == 0) : ?>
                 <div class="row">
               <?php endif; ?>
-              <div class="col s6 m3">
+              <div class="col s12 m3 resize">
                 <div class="card">
                   <div class="card-image center-align">
                       <?= $this->Html->link(
@@ -35,7 +34,6 @@
 
               echo "<h2 >C'est un peu vide ici...</h2>";
             } ?>
-          </div>
         </div>
       </div>
     </div>

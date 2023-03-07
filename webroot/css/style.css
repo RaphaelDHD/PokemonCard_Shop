@@ -29,8 +29,6 @@ p {
   line-height: 2rem;
 }
 
-.sidenav-trigger {
-}
 
 .parallax-container {
   min-height: 380px;
@@ -68,4 +66,17 @@ p {
 footer.page-footer {
   margin: 0;
     background-color: #ffb300;
+}
+
+.fixed {
+  position: fixed;
+  z-index: 20;
+}
+
+.resize{
+  max-width: 20%;
+}
+
+h4 {
+  margin-top: 6%;
 }
