@@ -24,21 +24,25 @@ class PokemonsController extends AppController
         if ($method == 1) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => '0' ])
                 ->order(['price' => 'asc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 2) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => '0' ])
                 ->order(['price' => 'desc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 3) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => '0' ])
                 ->order(['name' => 'asc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 4) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => '0' ])
                 ->order(['type1' => 'asc']);
             $this->set(compact('pokemons'));
         }
