@@ -53,13 +53,14 @@ class PokemonsController extends AppController
     {
         $session = $this->getRequest()->getSession();
         $basket = $session->read('Basket') ?? [];
-    
-        $pokemons = $this->Pokemons
-            ->find()
-            ->where(['id IN' => array_keys($basket)])
-            ->order(['id' => 'ASC']);
-    
-        $this->set(compact('pokemons', 'basket'));
+        $pokemons = $this->Pokemons->newEmptyEntity();
+        if ($basket) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->where(['id IN' => array_keys($basket)])
+                ->order(['id' => 'ASC']);
+        }
+        $this->set(compact('pokemons'));
     }
 
     public function removeFromBasket($id_card)
@@ -92,20 +93,20 @@ class PokemonsController extends AppController
     public function buy()
     {
         $this->loadModel('ListCards');
-    
+
         $session = $this->getRequest()->getSession();
         $basket = $session->read('Basket') ?? [];
-    
+
         foreach ($basket as $cardId => $quantity) {
             $entity = $this->ListCards->newEmptyEntity();
             $entity->user_id = $this->request->getSession()->read('Auth.id');
             $entity->card_id = $cardId;
             $this->ListCards->save($entity);
         }
-    
+
         // Vider le panier en session
         $session->delete('Basket');
-    
+
         $this->redirect(['action' => 'index']);
     }
 }
