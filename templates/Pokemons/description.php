@@ -7,31 +7,31 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col s9 m8 offset-m2 l3 offset-l3">
-            <div class="card">
+        <div class="col s12">
+            <div class="card-panel">
                 <div class="card-image">
                     <img src="<?= $pokemon->image ?>">
                 </div>
                 <div class="card-content">
                     <span class="card-title"><?= $pokemon->name ?></span>
                     <p><strong>Types:</strong> <?= $pokemon->type1 ?>
-                    <?= $pokemon->type2 ?>
+                        <?= $pokemon->type2 ?>
                     </p>
                     <p><strong>Stock en boutique:</strong> <?= $pokemon->stock ?> </p>
                     <p><strong>Prix:</strong> <?= $pokemon->price."€" ?> </p>
                 </div>
                 <div class="card-action">
                     <?php
-                        if($send == 0) {
-                            echo $this->Html->link('Retour',
-                                ['action' => 'index'],
-                                ['class' => "waves-effect waves-light btn"]);
-                        }
-                        elseif($send == 1) {
-                            echo $this->Html->link('Acheter la carte',
-                                ['action' => 'addToBasket', $pokemon->id],
-                                ['class' => "waves-effect waves-light btn"]);
-                        }
+                    if($send == 0) {
+                        echo $this->Html->link('Retour',
+                            ['action' => 'index'],
+                            ['class' => "waves-effect waves-light btn"]);
+                    }
+                    elseif($send == 1) {
+                        echo $this->Html->link('Acheter la carte',
+                            ['action' => 'addToBasket', $pokemon->id],
+                            ['class' => "waves-effect waves-light btn"]);
+                    }
                     ?>
 
                 </div>
@@ -39,6 +39,3 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</body>
-</html>
