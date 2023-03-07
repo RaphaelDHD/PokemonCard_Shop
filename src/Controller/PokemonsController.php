@@ -5,6 +5,13 @@ namespace App\Controller;
 
 class PokemonsController extends AppController
 {
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated(['shop', 'basketP','removeFromBasket','addToBasket']);
+    }
+
     public function index()
     {
         $this->loadModel('ListCards');
