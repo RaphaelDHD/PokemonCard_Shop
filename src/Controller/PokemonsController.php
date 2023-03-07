@@ -54,60 +54,65 @@ class PokemonsController extends AppController
 
     public function basketP()
     {
-        $this->loadModel('Baskets');
-
-        $pokemons = $this->Pokemons
-            ->find()
-            ->innerJoinWith('Baskets', function ($q) {
-                return $q->where(['Baskets.user_id' => $this->request->getSession()->read('Auth.id')]);
-            })
-            ->order(['Pokemons.id' => 'ASC']);
-
-
+        $session = $this->getRequest()->getSession();
+        $basket = $session->read('Basket') ?? [];
+        $pokemons = $this->Pokemons->newEmptyEntity();
+        if ($basket) {
+            $pokemons = $this->Pokemons
+                ->find()
+                ->where(['id IN' => array_keys($basket)])
+                ->order(['id' => 'ASC']);
+        }
         $this->set(compact('pokemons'));
+
     }
 
     public function removeFromBasket($id_card)
     {
-        $this->loadModel('Baskets');
-        if ($id_card != null) {
-            $entity = $this->Baskets->find()
-                ->where(['user_id' => $this->request->getSession()->read('Auth.id'), 'card_id' => $id_card])
-                ->first();
-            $this->Baskets->delete($entity);
-            $this->redirect(['action' => 'basketP']);
-        }
+        $session = $this->getRequest()->getSession();
+        $basket = $session->read('Basket') ?? [];
+
+        // Retirer l'article du panier
+        unset($basket[$id_card]);
+
+        // Stocker le panier dans la session
+        $session->write('Basket', $basket);
+        $this->redirect(['action' => 'basketP']);
+
     }
 
     public function addToBasket($id_card)
     {
-        $this->loadModel('Baskets');
-        if ($id_card != null) {
-            $entity = $this->Baskets->newEmptyEntity();
-            $entity->user_id = $this->request->getSession()->read('Auth.id');
-            $entity->card_id = $id_card;
-            $this->Baskets->save($entity);
-            $this->redirect(['action' => 'shop']);
-        }
+        $session = $this->getRequest()->getSession();
+        $basket = $session->read('Basket') ?? [];
+
+        // Ajouter l'article dans le panier
+        $basket[$id_card] = $basket[$id_card] ?? 0;
+        $basket[$id_card]++;
+
+        // Stocker le panier dans la session
+        $session->write('Basket', $basket);
+        $this->redirect(['action' => 'shop']);
+
     }
 
     public function buy(){
-        $this->loadModel('Baskets');
         $this->loadModel('ListCards');
 
-        $basket = $this->Baskets
-            ->find()
-            ->where(['user_id' => $this->request->getSession()->read('Auth.id')]);
-        foreach ($basket as $card) {
+        $session = $this->getRequest()->getSession();
+        $basket = $session->read('Basket') ?? [];
+
+        foreach ($basket as $cardId => $quantity) {
             $entity = $this->ListCards->newEmptyEntity();
             $entity->user_id = $this->request->getSession()->read('Auth.id');
-            $entity->card_id = $card->card_id;
+            $entity->card_id = $cardId;
             $this->ListCards->save($entity);
-            $this->Baskets->delete($card);
         }
+
+        // Vider le panier en session
+        $session->delete('Basket');
         $this->redirect(['action' => 'index']);
 
-        $this->set(compact('pokemons'));
     }
 
     public function description($id_card) {
