@@ -1,6 +1,6 @@
 <nav class="white fixed" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo "><img class="responsive-img" src="img/pokemon_logo.png"></a>
+        <a id="logo-container" href="/" class="brand-logo"> <?= $this->Html->image('pokemon_logo.png')?> </a>
         <ul class="right hide-on-med-and-down">
             <li>
                 <?= $this->Html->link('Boutique', ['action' => 'shop']) ?>

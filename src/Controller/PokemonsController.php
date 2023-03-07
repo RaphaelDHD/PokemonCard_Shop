@@ -113,7 +113,18 @@ class PokemonsController extends AppController
 
         // Vider le panier en session
         $session->delete('Basket');
-
         $this->redirect(['action' => 'index']);
+    }
+
+    public function description($id_card) {
+        $pokemon = $this->Pokemons->get($id_card);
+        $url = $this->referer();
+        if($url == '/') {
+            $send = 0;
+        }
+        elseif($url == '/shop') {
+            $send = 1;
+        }
+        $this->set(compact(['send', 'pokemon']));
     }
 }
