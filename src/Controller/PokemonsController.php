@@ -122,4 +122,8 @@ class PokemonsController extends AppController
         $this->set(compact(['send', 'pokemon']));
     }
 
+    public function add() {
+
+    }
+
 }

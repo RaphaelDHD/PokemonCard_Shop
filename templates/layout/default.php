@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <?= $this->Html->css(['materialize','style']) ?>
     <?= $this->fetch('css'); ?>
+    <?= $this->fetch('js'); ?>
 </head>
 <body>
 

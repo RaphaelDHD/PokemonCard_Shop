@@ -1,6 +1,6 @@
 .card-content {
     position: absolute;
-    top: 15%;
+    top: 17%;
     left: 35%;
 }
 
@@ -9,5 +9,19 @@
 }
 
 .card-panel {
-    margin-top: 30px;
+    margin-top: 10%;
+}
+
+.card-title {
+    font-size: 120%;
+    font-weight: bolder;
+    color: #306cb4;
+}
+
+.btn {
+    background-color: #306cb4;
+}
+
+.btn:hover {
+    background-color: #ed1d24;
 }

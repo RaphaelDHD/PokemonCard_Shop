@@ -3,6 +3,9 @@
         <a id="logo-container" href="/" class="brand-logo"> <?= $this->Html->image('pokemon_logo.png')?> </a>
         <ul class="right hide-on-med-and-down">
             <li>
+                <?= $this->Html->link('<i class = "material-icons red-text"> add_circle </i>', ['action' => 'add'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
+            </li>
+            <li>
                 <?= $this->Html->link('Boutique', ['action' => 'shop']) ?>
             </li>
             <li>
@@ -28,9 +31,6 @@
             </li>
             <li>
                 <?= $this->Html->link('Mes cartes', ['action' => '/index']) ?>
-            </li>
-            <li>
-                <?= $this->Html->link('<i class = "material-icons black-text"> shopping_cart </i>', ['action' => '/basketP'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
             </li>
             <li>
                 <?php
