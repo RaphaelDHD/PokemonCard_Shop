@@ -24,7 +24,7 @@
       </div>
       <div class="row">
       <?php endif; ?>
-      <div class="col s12 m3">
+      <div class="col s12 m3 resize">
         <div class="card">
           <div class="card-image center-align">
             <img class="responsive-img pokemon-image" src="<?= $pokemon->image ?>">
@@ -61,6 +61,8 @@
     max-width: 20%;
     padding: 0 8px;
   }
+
+
 </style>
 
 <script>

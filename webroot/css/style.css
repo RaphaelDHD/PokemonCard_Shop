@@ -74,3 +74,7 @@ footer.page-footer {
   position: fixed;
   z-index: 20;
 }
+
+.resize{
+  max-width: 20%;
+}
