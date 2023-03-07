@@ -2,26 +2,38 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Carte Pokémon</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Description de <?= $pokemon->name ?></title>
 </head>
 <body>
 <div class="container">
-    <h1 class="center-align">Carte Pokémon</h1>
     <div class="row">
-        <div class="col s12 m6">
+        <div class="col s9 m8 offset-m2 l3 offset-l3">
             <div class="card">
                 <div class="card-image">
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png">
-                    <span class="card-title"><?=  ?>></span>
+                    <img src="<?= $pokemon->image ?>">
                 </div>
                 <div class="card-content">
-                    <p>Type: Grass/Poison</p>
-                    <p>Prix: 10,00€</p>
-                    <p>Quantité: 5</p>
+                    <span class="card-title"><?= $pokemon->name ?></span>
+                    <p><strong>Types:</strong> <?= $pokemon->type1 ?>
+                    <?= $pokemon->type2 ?>
+                    </p>
+                    <p><strong>Stock en boutique:</strong> <?= $pokemon->stock ?> </p>
+                    <p><strong>Prix:</strong> <?= $pokemon->price."€" ?> </p>
                 </div>
                 <div class="card-action">
-                    <a href="#">Acheter maintenant</a>
+                    <?php
+                        if($send == 0) {
+                            echo $this->Html->link('Retour',
+                                ['action' => 'index'],
+                                ['class' => "waves-effect waves-light btn"]);
+                        }
+                        elseif($send == 1) {
+                            echo $this->Html->link('Acheter la carte',
+                                ['action' => 'addToBasket', $pokemon->id],
+                                ['class' => "waves-effect waves-light btn"]);
+                        }
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -29,4 +41,4 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
-</html><?php
+</html>

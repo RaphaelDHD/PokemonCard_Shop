@@ -104,7 +104,15 @@ class PokemonsController extends AppController
     }
 
     public function description($id_card) {
-
+        $pokemon = $this->Pokemons->get($id_card);
+        $url = $this->referer();
+        if($url == '/') {
+            $send = 0;
+        }
+        elseif($url == '/shop') {
+            $send = 1;
+        }
+        $this->set(compact(['send', 'pokemon']));
     }
 
 }
