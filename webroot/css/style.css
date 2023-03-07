@@ -69,3 +69,8 @@ footer.page-footer {
   margin: 0;
     background-color: #ffb300;
 }
+
+.fixed {
+  position: fixed;
+  z-index: 20;
+}
