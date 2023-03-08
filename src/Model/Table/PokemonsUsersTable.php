@@ -5,7 +5,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class listCardsTable extends Table
+class PokemonsUsersTable extends Table
 {
     public function initialize(array $config): void
     {
@@ -13,8 +13,15 @@ class listCardsTable extends Table
 
         parent::initialize($config);
 
+        $this->setTable('pokemons_users');
+
         $this->belongsTo('Pokemons', [
             'foreignKey' => 'card_id'
         ]);
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id'
+        ]);
+
     }
 }

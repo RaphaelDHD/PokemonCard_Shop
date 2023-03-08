@@ -14,13 +14,10 @@ class PokemonsTable extends Table
         $this->addBehavior('Timestamp');
         parent::initialize($config);
 
-        $this->hasMany('ListCards', [
+        $this->hasMany('PokemonsUsers', [
             'foreignKey' => 'card_id'
         ]);
 
-        $this->hasMany('Baskets', [
-            'foreignKey' => 'card_id'
-        ]);
 
     }
 

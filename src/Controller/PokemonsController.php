@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+use App\Model\Table\PokemonsUsersTable;
+use Cake\ORM\Query;
 
 
 class PokemonsController extends AppController
@@ -14,15 +16,25 @@ class PokemonsController extends AppController
 
     public function index()
     {
-        $this->loadModel('ListCards');
 
-        $pokemons = $this->Pokemons
+      /*  $pokemons = $this->Pokemons
             ->find()
-            ->innerJoinWith('ListCards', function ($q) {
-                return $q->where(['ListCards.user_id' => $this->request->getSession()->read('Auth.id')]);
+            ->contain('PokemonsUsers',function (Query $q){
+                return $q
+                    ->select()
+                    ->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
             ->order(['Pokemons.id' => 'ASC']);
-        $this->set(compact('pokemons'));
+            */
+
+            
+       $pokemons = $this->Pokemons
+            ->find()
+            ->innerJoinWith('PokemonsUsers', function ($q) {
+                return $q->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
+            })
+            ->order(['Pokemons.id' => 'ASC']); 
+        $this->set(compact('pokemons')); 
     }
 
     public function shop($method = 3)
@@ -96,17 +108,18 @@ class PokemonsController extends AppController
 
     }
 
-    public function buy(){
-        $this->loadModel('ListCards');
+    public function buy()
+    {
 
+        $this->loadModel('PokemonsUsers');
         $session = $this->getRequest()->getSession();
         $basket = $session->read('Basket') ?? [];
 
         foreach ($basket as $cardId => $quantity) {
-            $entity = $this->ListCards->newEmptyEntity();
+            $entity = $this->PokemonsUsers->newEmptyEntity();
             $entity->user_id = $this->request->getSession()->read('Auth.id');
             $entity->card_id = $cardId;
-            $this->ListCards->save($entity);
+            $this->PokemonsUsers->save($entity);
         }
 
         // Vider le panier en session
