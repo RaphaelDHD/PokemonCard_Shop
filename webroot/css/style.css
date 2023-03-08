@@ -80,3 +80,15 @@ footer.page-footer {
 h4 {
   margin-top: 6%;
 }
+
+addctn {
+    margin-top: 10%;
+}
+
+.standard {
+    background-color: #306cb4;
+}
+
+.standard:hover {
+    background-color: #ed1d24;
+}
