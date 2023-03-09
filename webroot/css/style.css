@@ -12,17 +12,17 @@ nav .brand-logo {
 }
 
 nav .brand-logo img {
-    width: 100px;
-    margin-top: 6%;
+  width: 100px;
+  margin-top: 6%;
 }
 
 h1 {
-    font-weight: 600;
-    font-family: Arial;
+  font-weight: 600;
+  font-family: Arial;
 }
 
 .bold {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 p {
@@ -34,17 +34,19 @@ p {
   min-height: 380px;
   line-height: 0;
   height: auto;
-  color: rgba(255,255,255,.9);
+  color: rgba(255, 255, 255, .9);
 }
-  .parallax-container .section {
-    width: 100%;
-  }
+
+.parallax-container .section {
+  width: 100%;
+}
 
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
     position: absolute;
     top: 40%;
   }
+
   #index-banner .section {
     top: 10%;
   }
@@ -59,21 +61,25 @@ p {
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
   font-size: inherit;
 }
 
 footer.page-footer {
   margin: 0;
-    background-color: #ffb300;
+  background-color: #ffb300;
 }
 
 .fixed {
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 20;
 }
 
-.resize{
+.resize {
   max-width: 20%;
 }
 
@@ -82,13 +88,19 @@ h4 {
 }
 
 addctn {
-    margin-top: 10%;
+  margin-top: 10%;
 }
 
 .standard {
-    background-color: #306cb4;
+  background-color: #306cb4;
 }
 
 .standard:hover {
-    background-color: #ed1d24;
+  background-color: #ed1d24;
+}
+
+
+h1 {
+  margin-top: 5%;
+
 }
