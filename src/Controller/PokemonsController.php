@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Model\Table\PokemonsUsersTable;
 use Cake\ORM\Query;
 
@@ -11,13 +12,13 @@ class PokemonsController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['shop', 'basketP','removeFromBasket','addToBasket']);
+        $this->Authentication->allowUnauthenticated(['shop', 'basketP', 'removeFromBasket', 'addToBasket']);
     }
 
     public function index()
     {
 
-      /*  $pokemons = $this->Pokemons
+        /*  $pokemons = $this->Pokemons
             ->find()
             ->contain('PokemonsUsers',function (Query $q){
                 return $q
@@ -27,14 +28,14 @@ class PokemonsController extends AppController
             ->order(['Pokemons.id' => 'ASC']);
             */
 
-            
-       $pokemons = $this->Pokemons
+
+        $pokemons = $this->Pokemons
             ->find()
             ->innerJoinWith('PokemonsUsers', function ($q) {
                 return $q->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
-            ->order(['Pokemons.id' => 'ASC']); 
-        $this->set(compact('pokemons')); 
+            ->order(['Pokemons.id' => 'ASC']);
+        $this->set(compact('pokemons'));
     }
 
     public function shop($method = 3)
@@ -76,7 +77,6 @@ class PokemonsController extends AppController
                 ->order(['id' => 'ASC']);
         }
         $this->set(compact('pokemons'));
-
     }
 
     public function removeFromBasket($id_card)
@@ -90,7 +90,6 @@ class PokemonsController extends AppController
         // Stocker le panier dans la session
         $session->write('Basket', $basket);
         $this->redirect(['action' => 'basketP']);
-
     }
 
     public function addToBasket($id_card)
@@ -105,7 +104,6 @@ class PokemonsController extends AppController
         // Stocker le panier dans la session
         $session->write('Basket', $basket);
         $this->redirect(['action' => 'shop']);
-
     }
 
     public function buy()
@@ -125,23 +123,70 @@ class PokemonsController extends AppController
         // Vider le panier en session
         $session->delete('Basket');
         $this->redirect(['action' => 'index']);
-
     }
 
-    public function description($id_card) {
+    public function description($id_card)
+    {
         $pokemon = $this->Pokemons->get($id_card);
         $url = $this->referer();
-        if($url == '/') {
+        if ($url == '/') {
             $send = 0;
-        }
-        elseif($url == '/shop') {
+        } elseif ($url == '/shop') {
             $send = 1;
         }
         $this->set(compact(['send', 'pokemon']));
     }
 
-    public function add() {
+    public function add()
+    {
+    }
+
+    public function renderJson()
+    {
+        $method = $this->request->getQuery('method');
+        switch($method){
+            case 'default' :
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'type' :
+                $type = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['type' => $type])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'name' :
+                $name = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['name' => $name])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            // Ajouter d'autres cas ici pour d'autres critères de filtrage, selon vos besoins
+            default :
+                // Retourner une réponse avec un statut d'erreur si la méthode demandée n'est pas prise en charge
+                $pokemons = $this->Pokemons
+                ->find()
+                ->order(['id' => 'Asc']);
+            return $this->response
+                ->withType("Application/json")
+                ->withStringBody(json_encode($pokemons))
+                ->withStatus(200);
+        }
 
     }
+
+
 
 }
