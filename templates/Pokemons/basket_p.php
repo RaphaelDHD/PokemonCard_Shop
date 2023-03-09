@@ -24,7 +24,7 @@
     <h5>Total : <?= $totalPrice ?> €</h5>
     <?= $this->Html->link('Acheter',
     ['action' => 'buy'],
-    ['waves-effect waves-light btn indigo darken-4 paddingBot']
+    ['class' => 'waves-effect waves-light btn indigo darken-4 paddingBot']
     )?>
   </div>
 </div>
