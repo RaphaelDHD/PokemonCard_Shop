@@ -35,7 +35,7 @@
           </div>
           <div class="card-content">
             <span class="card-title"><?= $pokemon->name ?></span>
-            <p><?= $pokemon->price ?></p>
+            <p><?= $pokemon->price.' $' ?></p>
             <?= $this->Html->link(
               'add_shopping_cart                        ',
               ['action' => 'addToBasket', $pokemon->id],
