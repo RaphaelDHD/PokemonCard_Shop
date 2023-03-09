@@ -21,7 +21,7 @@
                   </div>
                   <div class="card-content">
                   <span class="card-title"><?= $pokemon->name ?></span>
-                    <p><?= $pokemon->price ?></p>
+                    <p><?= $pokemon->price.' $' ?></p>
                   </div>
                 </div>
               </div>
