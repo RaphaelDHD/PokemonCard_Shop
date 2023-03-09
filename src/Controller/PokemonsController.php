@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Model\Table\PokemonsUsersTable;
 use Cake\ORM\Query;
+use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Exception\InternalErrorException;
 
 
 class PokemonsController extends AppController
@@ -17,17 +19,6 @@ class PokemonsController extends AppController
 
     public function index()
     {
-
-        /*  $pokemons = $this->Pokemons
-            ->find()
-            ->contain('PokemonsUsers',function (Query $q){
-                return $q
-                    ->select()
-                    ->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
-            })
-            ->order(['Pokemons.id' => 'ASC']);
-            */
-
 
         $pokemons = $this->Pokemons
             ->find()
