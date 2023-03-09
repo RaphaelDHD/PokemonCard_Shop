@@ -35,21 +35,25 @@ class PokemonsController extends AppController
         if ($method == 1) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => 1])
                 ->order(['price' => 'asc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 2) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => 1])
                 ->order(['price' => 'desc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 3) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => 1])
                 ->order(['name' => 'asc']);
             $this->set(compact('pokemons'));
         } elseif ($method == 4) {
             $pokemons = $this->Pokemons
                 ->find()
+                ->where(['stock >' => 1])
                 ->order(['type1' => 'asc']);
             $this->set(compact('pokemons'));
         }
@@ -109,6 +113,11 @@ class PokemonsController extends AppController
             $entity->user_id = $this->request->getSession()->read('Auth.id');
             $entity->card_id = $cardId;
             $this->PokemonsUsers->save($entity);
+
+            $pokemon = $this->Pokemons->get($cardId);
+            $pokemon->stock -= 1;
+            $this->Pokemons->save($pokemon);
+
         }
 
         // Vider le panier en session
@@ -135,8 +144,8 @@ class PokemonsController extends AppController
     public function renderJson()
     {
         $method = $this->request->getQuery('method');
-        switch($method){
-            case 'default' :
+        switch ($method) {
+            case 'default':
                 $pokemons = $this->Pokemons
                     ->find()
                     ->order(['id' => 'Asc']);
@@ -144,7 +153,7 @@ class PokemonsController extends AppController
                     ->withType("Application/json")
                     ->withStringBody(json_encode($pokemons))
                     ->withStatus(200);
-            case 'type' :
+            case 'type':
                 $type = $this->request->getQuery('value');
                 $pokemons = $this->Pokemons
                     ->find()
@@ -154,7 +163,7 @@ class PokemonsController extends AppController
                     ->withType("Application/json")
                     ->withStringBody(json_encode($pokemons))
                     ->withStatus(200);
-            case 'name' :
+            case 'name':
                 $name = $this->request->getQuery('value');
                 $pokemons = $this->Pokemons
                     ->find()
@@ -164,20 +173,16 @@ class PokemonsController extends AppController
                     ->withType("Application/json")
                     ->withStringBody(json_encode($pokemons))
                     ->withStatus(200);
-            // Ajouter d'autres cas ici pour d'autres critères de filtrage, selon vos besoins
-            default :
+                // Ajouter d'autres cas ici pour d'autres critères de filtrage, selon vos besoins
+            default:
                 // Retourner une réponse avec un statut d'erreur si la méthode demandée n'est pas prise en charge
                 $pokemons = $this->Pokemons
-                ->find()
-                ->order(['id' => 'Asc']);
-            return $this->response
-                ->withType("Application/json")
-                ->withStringBody(json_encode($pokemons))
-                ->withStatus(200);
+                    ->find()
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
         }
-
     }
-
-
-
 }
