@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Controller;
+
 use App\Model\Table\PokemonsUsersTable;
 use Cake\ORM\Query;
+use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Exception\InternalErrorException;
 
 
 class PokemonsController extends AppController
@@ -11,24 +14,13 @@ class PokemonsController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['shop', 'basketP','removeFromBasket','addToBasket']);
+        $this->Authentication->allowUnauthenticated(['shop', 'basketP', 'removeFromBasket', 'addToBasket']);
     }
 
     public function index()
     {
 
-      /*  $pokemons = $this->Pokemons
-            ->find()
-            ->contain('PokemonsUsers',function (Query $q){
-                return $q
-                    ->select()
-                    ->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
-            })
-            ->order(['Pokemons.id' => 'ASC']);
-            */
-
-
-       $pokemons = $this->Pokemons
+        $pokemons = $this->Pokemons
             ->find()
             ->innerJoinWith('PokemonsUsers', function ($q) {
                 return $q->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
@@ -128,13 +120,13 @@ class PokemonsController extends AppController
 
     }
 
-    public function description($id_card) {
+    public function description($id_card)
+    {
         $pokemon = $this->Pokemons->get($id_card);
         $url = $this->referer();
-        if($url == '/') {
+        if ($url == '/') {
             $send = 0;
-        }
-        elseif($url == '/shop') {
+        } elseif ($url == '/shop') {
             $send = 1;
         }
         $this->set(compact(['send', 'pokemon']));
@@ -173,6 +165,50 @@ class PokemonsController extends AppController
         }
 
         $this->set(compact('pokemon'));
+
+    public function renderJson()
+    {
+        $method = $this->request->getQuery('method');
+        switch($method){
+            case 'default' :
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'type' :
+                $type = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['type' => $type])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'name' :
+                $name = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['name' => $name])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            // Ajouter d'autres cas ici pour d'autres critères de filtrage, selon vos besoins
+            default :
+                // Retourner une réponse avec un statut d'erreur si la méthode demandée n'est pas prise en charge
+                $pokemons = $this->Pokemons
+                ->find()
+                ->order(['id' => 'Asc']);
+            return $this->response
+                ->withType("Application/json")
+                ->withStringBody(json_encode($pokemons))
+                ->withStatus(200);
+        }
 
     }
 
