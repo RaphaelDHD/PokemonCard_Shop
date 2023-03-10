@@ -1,45 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'ajout</title>
-    <?= $this->Html->css(['add']); ?>
-</head>
-<body>
-<div class="container addctn">
-    <h1>Formulaire Pokémon</h1>
-    <?= $this->Form->create() ?>
+<?= $this->Html->css(['add']); ?>
+
+<div class="container">
+    <h3>Ajouter une carte à la boutique</h3>
+    <?= $this->Form->create($pokemon,['type' => 'file']) ?>
         <div class="input-field">
-            <?= $this->Form->text('nom_pokemon', [
+            <?= $this->Form->text('name', [
                 'id' => 'nom_pokemon'
             ]);
             ?>
             <?= $this->Form->label('nom_pokemon',
-                'Nom du Pokémon'
+                'Nom du Pokémon ( ex : Pikachu )'
             );
             ?>
         </div>
-        <p>
-            <label>
-                <input type="checkbox" class="filled-in" id="prix_personnalise" name="prix_personnalise">
-                <span>Prix personnalisé ?</span>
-            </label>
-        </p>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Carte du Pokemon (format png/jpg)</span>
+                <?= $this->Form->file('image_pokemon'); ?>
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
         <div class="input-field">
-            <?= $this->Form->number('prix', [
-                'id' => 'prix'
+            <?= $this->Form->text('type1', [
+                'id' => 'type1_pokemon'
             ]);
             ?>
-            <?= $this->Form->label('prix',
-                'Prix personnalisé (en euros)'
+            <?= $this->Form->label('type1_pokemon',
+                'Type 1 du Pokémon'
             );
             ?>
         </div>
-    <?= $this->Form->button('Ajouter <i class="material-icons right">add_circle</i>',['class' => "btn waves-effect waves-light standard", 'escapeTitle' => false]) ?>
+        <div class="input-field">
+            <?= $this->Form->text('type2', [
+                'id' => 'type2_pokemon'
+            ]);
+            ?>
+            <?= $this->Form->label('type2_pokemon',
+                'Type 2 du Pokémon'
+            );
+            ?>
+        </div>
+        <div class="input-field">
+            <?= $this->Form->number('price', [
+                'id' => 'prix_pokemon'
+            ]);
+            ?>
+            <?= $this->Form->label('prix_pokemon',
+                'Prix de votre carte'
+            );
+            ?>
+        </div>
+        <div class="input-field">
+            <?= $this->Form->number('stock', [
+                'id' => 'stock_pokemon'
+            ]);
+            ?>
+            <?= $this->Form->label('stock_pokemon',
+                'Nombre de carte à mettre en vente'
+            );
+            ?>
+        </div>
+    <?= $this->Form->button('Ajouter <i class="material-icons right">add_circle</i>',['class' => "btn waves-effect waves-light standard noH", 'escapeTitle' => false, 'type' => 'submit']) ?>
     <?= $this->Form->end() ?>
 </div>
-</body>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</html>
+

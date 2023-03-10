@@ -27,14 +27,14 @@ class PokemonsController extends AppController
             ->order(['Pokemons.id' => 'ASC']);
             */
 
-            
+
        $pokemons = $this->Pokemons
             ->find()
             ->innerJoinWith('PokemonsUsers', function ($q) {
                 return $q->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
-            ->order(['Pokemons.id' => 'ASC']); 
-        $this->set(compact('pokemons')); 
+            ->order(['Pokemons.id' => 'ASC']);
+        $this->set(compact('pokemons'));
     }
 
     public function shop($method = 3)
@@ -140,7 +140,39 @@ class PokemonsController extends AppController
         $this->set(compact(['send', 'pokemon']));
     }
 
-    public function add() {
+    public function create() {
+        $id = $this->Pokemons->find()->select(['id'])->last();
+        $pokemon = $this->Pokemons->newEntity([
+            'id' => $id
+        ]);
+        $this->Pokemons->save($pokemon);
+            return $this->redirect(['action' => "add", $pokemon->id]);
+    }
+
+    public function add($id) {
+        $pokemon = $this->Pokemons->get($id);
+
+        if(!empty($this->getRequest()->getData())){
+
+            $data = [
+              'image' =>    $this->getRequest()->getData('image_pokemon')->getClientFilename()
+            ];
+
+            $upload = $this->request->getData("image_pokemon");
+            $targetPath = WWW_ROOT . 'img' . DS . $upload->getClientFilename();
+            move_uploaded_file($upload->getStream()->getMetadata('uri'), $targetPath);
+
+            $this->Pokemons->patchEntity($pokemon, $this->getRequest()->getData());
+            $this->Pokemons->patchEntity($pokemon, $data);
+            if($this->Pokemons->save($pokemon)){
+                return $this->redirect(['action' => "shop"]);
+            } else {
+                echo "CA C'EST MAL PASSE CHEF !!!!";
+            }
+
+        }
+
+        $this->set(compact('pokemon'));
 
     }
 

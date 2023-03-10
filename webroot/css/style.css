@@ -70,6 +70,9 @@ footer.page-footer {
 
 .fixed {
   position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
   z-index: 20;
 }
 
@@ -81,14 +84,14 @@ h4 {
   margin-top: 6%;
 }
 
-addctn {
-    margin-top: 10%;
-}
-
 .standard {
     background-color: #306cb4;
 }
 
 .standard:hover {
     background-color: #ed1d24;
+}
+
+.imgF {
+    max-width: 230px;
 }

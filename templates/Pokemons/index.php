@@ -12,12 +12,24 @@
               <div class="col s12 m3 resize">
                 <div class="card">
                   <div class="card-image center-align">
-                      <?= $this->Html->link(
-                          '<img class="responsive-img pokemon-image" src="'. $pokemon->image. '">',
-                          ['action' => 'description', $pokemon->id],
-                          ['escapeTitle' => FALSE]
-                      ); ?>
-
+                      <?php
+                      if(substr($pokemon->image,0,5) == "https" ) {
+                          echo $this->Html->link(
+                              '<img class="responsive-img pokemon-image" src="' . $pokemon->image . '">',
+                              ['action' => 'description', $pokemon->id],
+                              ['escapeTitle' => FALSE]
+                          );
+                      }
+                      else {
+                          echo $this->Html->link(
+                              $this->Html->image($pokemon->image, [
+                                  "alt" => "Pas d'image",
+                              ]),
+                              ['action' => 'description', $pokemon->id],
+                              ['escapeTitle' => FALSE]
+                          );
+                      }
+                      ?>
                   </div>
                   <div class="card-content">
                   <span class="card-title"><?= $pokemon->name ?></span>
