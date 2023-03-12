@@ -124,6 +124,7 @@ class PokemonsController extends AppController
     {
         $pokemon = $this->Pokemons->get($id_card);
         $url = $this->referer();
+        $send = 0;
         if ($url == '/') {
             $send = 0;
         } elseif ($url == '/shop') {
@@ -141,13 +142,14 @@ class PokemonsController extends AppController
             return $this->redirect(['action' => "add", $pokemon->id]);
     }
 
-    public function add($id) {
+    public function add($id)
+    {
         $pokemon = $this->Pokemons->get($id);
 
-        if(!empty($this->getRequest()->getData())){
+        if (!empty($this->getRequest()->getData())) {
 
             $data = [
-              'image' =>    $this->getRequest()->getData('image_pokemon')->getClientFilename()
+                'image' => $this->getRequest()->getData('image_pokemon')->getClientFilename()
             ];
 
             $upload = $this->request->getData("image_pokemon");
@@ -156,7 +158,7 @@ class PokemonsController extends AppController
 
             $this->Pokemons->patchEntity($pokemon, $this->getRequest()->getData());
             $this->Pokemons->patchEntity($pokemon, $data);
-            if($this->Pokemons->save($pokemon)){
+            if ($this->Pokemons->save($pokemon)) {
                 return $this->redirect(['action' => "shop"]);
             } else {
                 echo "CA C'EST MAL PASSE CHEF !!!!";
@@ -165,6 +167,7 @@ class PokemonsController extends AppController
         }
 
         $this->set(compact('pokemon'));
+    }
 
     public function renderJson()
     {

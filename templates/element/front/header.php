@@ -1,6 +1,6 @@
 <nav class="white fixed" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="brand-logo"> <?= $this->Html->image('pokemon_logo.png')?> </a>
+        <a id="logo-container" href="/pokemons" class="brand-logo"> <?= $this->Html->image('pokemon_logo.png')?> </a>
         <ul class="right hide-on-med-and-down">
             <li>
                 <?= $this->Html->link('<i class = "material-icons red-text"> add_circle </i>', ['action' => 'create'], ['class' => 'white-text', 'escapeTitle' => false]) ?>
