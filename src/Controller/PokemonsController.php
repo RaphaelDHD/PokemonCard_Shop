@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Model\Table\PokemonsUsersTable;
+use Cake\ORM\Query;
+use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Exception\InternalErrorException;
+
 
 class PokemonsController extends AppController
 {
@@ -9,17 +14,16 @@ class PokemonsController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['shop', 'basketP','removeFromBasket','addToBasket']);
+        $this->Authentication->allowUnauthenticated(['shop', 'basketP', 'removeFromBasket', 'addToBasket']);
     }
 
     public function index()
     {
-        $this->loadModel('ListCards');
 
         $pokemons = $this->Pokemons
             ->find()
-            ->innerJoinWith('ListCards', function ($q) {
-                return $q->where(['ListCards.user_id' => $this->request->getSession()->read('Auth.id')]);
+            ->innerJoinWith('PokemonsUsers', function ($q) {
+                return $q->where(['PokemonsUsers.user_id' => $this->request->getSession()->read('Auth.id')]);
             })
             ->order(['Pokemons.id' => 'ASC']);
         $this->set(compact('pokemons'));
@@ -96,17 +100,18 @@ class PokemonsController extends AppController
 
     }
 
-    public function buy(){
-        $this->loadModel('ListCards');
+    public function buy()
+    {
 
+        $this->loadModel('PokemonsUsers');
         $session = $this->getRequest()->getSession();
         $basket = $session->read('Basket') ?? [];
 
         foreach ($basket as $cardId => $quantity) {
-            $entity = $this->ListCards->newEmptyEntity();
+            $entity = $this->PokemonsUsers->newEmptyEntity();
             $entity->user_id = $this->request->getSession()->read('Auth.id');
             $entity->card_id = $cardId;
-            $this->ListCards->save($entity);
+            $this->PokemonsUsers->save($entity);
         }
 
         // Vider le panier en session
@@ -115,19 +120,98 @@ class PokemonsController extends AppController
 
     }
 
-    public function description($id_card) {
+    public function description($id_card)
+    {
         $pokemon = $this->Pokemons->get($id_card);
         $url = $this->referer();
-        if($url == '/') {
+        $send = 0;
+        if ($url == '/') {
             $send = 0;
-        }
-        elseif($url == '/shop') {
+        } elseif ($url == '/shop') {
             $send = 1;
         }
         $this->set(compact(['send', 'pokemon']));
     }
 
-    public function add() {
+    public function create() {
+        $id = $this->Pokemons->find()->select(['id'])->last();
+        $pokemon = $this->Pokemons->newEntity([
+            'id' => $id
+        ]);
+        $this->Pokemons->save($pokemon);
+            return $this->redirect(['action' => "add", $pokemon->id]);
+    }
+
+    public function add($id)
+    {
+        $pokemon = $this->Pokemons->get($id);
+
+        if (!empty($this->getRequest()->getData())) {
+
+            $data = [
+                'image' => $this->getRequest()->getData('image_pokemon')->getClientFilename()
+            ];
+
+            $upload = $this->request->getData("image_pokemon");
+            $targetPath = WWW_ROOT . 'img' . DS . $upload->getClientFilename();
+            move_uploaded_file($upload->getStream()->getMetadata('uri'), $targetPath);
+
+            $this->Pokemons->patchEntity($pokemon, $this->getRequest()->getData());
+            $this->Pokemons->patchEntity($pokemon, $data);
+            if ($this->Pokemons->save($pokemon)) {
+                return $this->redirect(['action' => "shop"]);
+            } else {
+                echo "CA C'EST MAL PASSE CHEF !!!!";
+            }
+
+        }
+
+        $this->set(compact('pokemon'));
+    }
+
+    public function renderJson()
+    {
+        $method = $this->request->getQuery('method');
+        switch($method){
+            case 'default' :
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'type' :
+                $type = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['type' => $type])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            case 'name' :
+                $name = $this->request->getQuery('value');
+                $pokemons = $this->Pokemons
+                    ->find()
+                    ->where(['name' => $name])
+                    ->order(['id' => 'Asc']);
+                return $this->response
+                    ->withType("Application/json")
+                    ->withStringBody(json_encode($pokemons))
+                    ->withStatus(200);
+            // Ajouter d'autres cas ici pour d'autres critères de filtrage, selon vos besoins
+            default :
+                // Retourner une réponse avec un statut d'erreur si la méthode demandée n'est pas prise en charge
+                $pokemons = $this->Pokemons
+                ->find()
+                ->order(['id' => 'Asc']);
+            return $this->response
+                ->withType("Application/json")
+                ->withStringBody(json_encode($pokemons))
+                ->withStatus(200);
+        }
 
     }
 

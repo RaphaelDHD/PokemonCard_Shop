@@ -5,7 +5,18 @@
     $totalPrice = 0;
     foreach ($pokemons as $pokemon) : ?>
       <li class="collection-item avatar item">
-        <img src="<?= $pokemon->image ?>" alt="" class="responsive-img" style="width: 150px;">
+          <?php
+          if(substr($pokemon->image,0,5) == "https" ) {
+              echo '<img class="responsive-img pokemon-image" src="' . $pokemon->image . '">';
+          }
+          else {
+              echo $this->Html->image($pokemon->image, [
+                  "alt" => "Pas d'image",
+                      "class" => "imgF"
+                  ]
+              );
+          }
+          ?>
         <div class="content">
           <span class="title"><?= h($pokemon->name) ?></span>
           <p class="price">Prix : <?= h($pokemon->price) ?></p>
@@ -54,5 +65,5 @@
   .paddingBot {
     margin-bottom: 20px;
   }
-  
+
 </style>

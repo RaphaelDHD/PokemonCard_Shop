@@ -48,6 +48,18 @@ class UsersController extends AppController
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
 
+    public function renderJson()
+    {
+        $users = $this->Users
+            ->find()
+            ->order(['id' => 'Asc']);
+        return $this->response
+            ->withType("Application/json")
+            ->withStringBody(json_encode($users))
+            ->withStatus(200);
+    }
+
+
     protected function _setPassword(string $password)
     {
         $hasher = new DefaultPasswordHasher();

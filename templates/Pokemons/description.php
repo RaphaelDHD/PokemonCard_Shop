@@ -11,7 +11,17 @@
         <div class="col s12">
             <div class="card-panel">
                 <div class="card-image">
-                    <img src="<?= $pokemon->image ?>">
+                    <?php
+                    if(substr($pokemon->image,0,5) == "https" ) {
+                        echo "<img src=$pokemon->image";
+                    }
+                    else {
+                        echo $this->Html->image($pokemon->image, [
+                            "alt" => "Pas d'image",
+                            "class" => "imgF"
+                        ]);
+                    }
+                    ?>
                 </div>
                 <div class="card-content">
                     <span class="card-title"><?= $pokemon->name ?></span>

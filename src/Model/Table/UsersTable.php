@@ -7,6 +7,17 @@ use Cake\Validation\Validator;
 
 class UsersTable extends Table 
 {
+
+    public function initialize(array $config) : void{
+        parent::initialize($config);
+
+        $this->hasMany('PokemonsUsers', [
+            'foreignKey' => 'card_id'
+        ]);
+
+
+    }
+
     public function validationDefault(Validator $validator): Validator
     {
         return $validator
